@@ -113,29 +113,9 @@ nav{
 .logo-mark{
   width:40px;height:40px;flex:0 0 40px;
   object-fit:contain;display:block;
-  filter:drop-shadow(2px 2px 0 rgba(0,0,0,.2));
+  filter:drop-shadow(1px 1px 0 rgba(0,0,0,.12));
 }
 .logo-text{display:inline-flex;align-items:baseline;gap:0;line-height:1;}
-.hero-brand{
-  display:inline-flex;align-items:center;gap:12px;
-  margin-bottom:18px;
-}
-.hero-brand .logo-mark{
-  width:68px;height:68px;flex-basis:68px;
-  filter:drop-shadow(3px 3px 0 rgba(0,0,0,.24));
-}
-.hero-brand-copy{
-  display:flex;flex-direction:column;gap:4px;
-}
-.hero-brand-kicker{
-  font-size:.68rem;letter-spacing:3px;text-transform:uppercase;
-  color:var(--verde);font-weight:700;
-}
-.hero-brand-name{
-  font-family:'Archivo Black',sans-serif;
-  font-size:clamp(1.35rem,3vw,2rem);
-  line-height:1;
-}
 .btn-nav{
   background:var(--verde);color:var(--preto);
   border:var(--borda);box-shadow:var(--sombra-sm);
@@ -183,7 +163,6 @@ section{padding:clamp(56px,8vw,100px) var(--pad-x);}
 .section-title{
   font-size:clamp(1.75rem,4.5vw,3.4rem);
   line-height:1.08;margin-bottom:14px;
-  text-shadow:0 2px 0 rgba(0,0,0,.12);
 }
 .divider{width:48px;height:4px;background:var(--verde);margin-bottom:28px;}
 .divider-k{background:var(--preto);}
@@ -260,7 +239,6 @@ section{padding:clamp(56px,8vw,100px) var(--pad-x);}
 .hero-hl{
   font-size:clamp(1.9rem,5vw,4.4rem);
   line-height:1.05;color:var(--offwhite);margin-bottom:20px;
-  text-shadow:0 4px 0 rgba(0,0,0,.16);
 }
 
 /* Glitch */
@@ -536,7 +514,14 @@ footer{
   display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;
 }
 .f-logo{font-family:'Archivo Black',sans-serif;font-size:clamp(1.1rem,1.3rem,1.3rem);color:var(--verde);}
+.f-logo{
+  display:flex;align-items:center;gap:12px;
+}
 .f-logo span{color:var(--offwhite);}
+.f-logo-mark{
+  width:42px;height:42px;flex:0 0 42px;object-fit:contain;display:block;
+  filter:drop-shadow(1px 1px 0 rgba(0,0,0,.12));
+}
 .f-links{display:flex;gap:16px;flex-wrap:wrap;}
 .f-links a{color:#666;text-decoration:none;font-size:.8rem;transition:color .2s;min-height:32px;display:flex;align-items:center;}
 .f-links a:hover{color:var(--verde);}
@@ -579,7 +564,7 @@ footer{
   .mq-item{padding:0 18px;}
   .mq-item::before{margin-right:14px;}
   .hero-badge,.ftag,.hero-card::before,.pc::before,.pop-tag{animation:none !important;}
-  .wa-float{display:flex;}
+  .wa-float{display:none !important;}
 }
 
 /* Small mobile */
@@ -618,9 +603,6 @@ footer{
 @media(max-width:380px){
   .logo{font-size:1.05rem;}
   .logo-mark{width:32px;height:32px;flex-basis:32px;}
-  .hero-brand{gap:10px;margin-bottom:14px;}
-  .hero-brand .logo-mark{width:54px;height:54px;flex-basis:54px;}
-  .hero-brand-name{font-size:1.15rem;}
   .hero-badge{font-size:.66rem;padding:4px 10px;}
   .hero-hl{font-size:1.7rem;}
   .plan-pr{font-size:1.9rem;}
@@ -689,7 +671,7 @@ footer{
     <span class="mq-item">Moda Atacado</span>
     <span class="mq-item">Mais Conversões</span>
     <span class="mq-item">Loja Profissional</span>
-    <span class="mq-item">Revendedoras</span>
+    <span class="mq-item">Lojistas</span>
     <span class="mq-item">VIZZU Digital</span>
     <span class="mq-item">Personalização FacilZap</span>
     <span class="mq-item">Design que Vende</span>
@@ -697,7 +679,7 @@ footer{
     <span class="mq-item">Moda Atacado</span>
     <span class="mq-item">Mais Conversões</span>
     <span class="mq-item">Loja Profissional</span>
-    <span class="mq-item">Revendedoras</span>
+    <span class="mq-item">Lojistas</span>
     <span class="mq-item">VIZZU Digital</span>
   </div>
 </div>
@@ -706,13 +688,6 @@ footer{
 <section id="hero">
   <div class="hero-grid">
     <div>
-      <div class="hero-brand rev">
-        <img class="logo-mark" src="assets/logo/Design%20sem%20nome%20(99).png" alt="VIZZU Digital">
-        <div class="hero-brand-copy">
-          <span class="hero-brand-kicker">Marca da página</span>
-          <span class="hero-brand-name">VIZZU Digital</span>
-        </div>
-      </div>
       <span class="hero-badge rev">✦ Especialista FacilZap</span>
       <h1 class="hero-hl rev d1">
         Sua loja merece um visual que
@@ -746,7 +721,7 @@ footer{
     <span class="tag tl rev">O Problema</span>
     <h2 class="section-title rev d1">Loja igual à de todo mundo não vende.</h2>
     <div class="divider divider-k rev d1"></div>
-    <p class="prob-lead rev d2">No FacilZap, milhares de revendedoras usam o mesmo layout padrão. Sua loja se perde na multidão, seus produtos não são valorizados e suas clientes não sentem a confiança que precisam para comprar.</p>
+    <p class="prob-lead rev d2">No FacilZap, milhares de lojistas usam o mesmo layout padrão. Sua loja se perde na multidão, seus produtos não são valorizados e suas clientes não sentem a confiança que precisam para comprar.</p>
     <div class="prob-grid">
       <div class="prob-card rev d1"><span class="prob-icon">😔</span><h3>Aparência amadora</h3><p>O layout padrão não transmite profissionalismo. Sua cliente entra na loja e não sente que pode confiar na marca.</p></div>
       <div class="prob-card rev d2"><span class="prob-icon">📦</span><h3>Catálogo desorganizado</h3><p>Sem estrutura visual clara, as clientes se perdem nos produtos, ficam confusas e acabam desistindo da compra.</p></div>
@@ -955,7 +930,7 @@ footer{
 
 <!-- FOOTER -->
 <footer>
-  <div class="f-logo">VIZZU<span> Digital</span></div>
+  <div class="f-logo"><img class="f-logo-mark" src="assets/logo/Design%20sem%20nome%20(99).png" alt="VIZZU Digital"><span>VIZZU<span> Digital</span></span></div>
   <nav class="f-links" aria-label="Rodapé">
     <a href="#hero">Início</a>
     <a href="#problema">O Problema</a>
