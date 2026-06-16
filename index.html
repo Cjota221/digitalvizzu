@@ -111,11 +111,31 @@ nav{
 }
 .logo span{color:var(--offwhite);}
 .logo-mark{
-  width:34px;height:34px;flex:0 0 34px;
+  width:40px;height:40px;flex:0 0 40px;
   object-fit:contain;display:block;
   filter:drop-shadow(2px 2px 0 rgba(0,0,0,.2));
 }
 .logo-text{display:inline-flex;align-items:baseline;gap:0;line-height:1;}
+.hero-brand{
+  display:inline-flex;align-items:center;gap:12px;
+  margin-bottom:18px;
+}
+.hero-brand .logo-mark{
+  width:68px;height:68px;flex-basis:68px;
+  filter:drop-shadow(3px 3px 0 rgba(0,0,0,.24));
+}
+.hero-brand-copy{
+  display:flex;flex-direction:column;gap:4px;
+}
+.hero-brand-kicker{
+  font-size:.68rem;letter-spacing:3px;text-transform:uppercase;
+  color:var(--verde);font-weight:700;
+}
+.hero-brand-name{
+  font-family:'Archivo Black',sans-serif;
+  font-size:clamp(1.35rem,3vw,2rem);
+  line-height:1;
+}
 .btn-nav{
   background:var(--verde);color:var(--preto);
   border:var(--borda);box-shadow:var(--sombra-sm);
@@ -597,7 +617,10 @@ footer{
 /* Very small mobile */
 @media(max-width:380px){
   .logo{font-size:1.05rem;}
-  .logo-mark{width:30px;height:30px;flex-basis:30px;}
+  .logo-mark{width:32px;height:32px;flex-basis:32px;}
+  .hero-brand{gap:10px;margin-bottom:14px;}
+  .hero-brand .logo-mark{width:54px;height:54px;flex-basis:54px;}
+  .hero-brand-name{font-size:1.15rem;}
   .hero-badge{font-size:.66rem;padding:4px 10px;}
   .hero-hl{font-size:1.7rem;}
   .plan-pr{font-size:1.9rem;}
@@ -683,6 +706,13 @@ footer{
 <section id="hero">
   <div class="hero-grid">
     <div>
+      <div class="hero-brand rev">
+        <img class="logo-mark" src="assets/logo/Design%20sem%20nome%20(99).png" alt="VIZZU Digital">
+        <div class="hero-brand-copy">
+          <span class="hero-brand-kicker">Marca da página</span>
+          <span class="hero-brand-name">VIZZU Digital</span>
+        </div>
+      </div>
       <span class="hero-badge rev">✦ Especialista FacilZap</span>
       <h1 class="hero-hl rev d1">
         Sua loja merece um visual que
