@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#15151A">
+<title>VIZZU Digital — Personalização de Lojas FacilZap</title>
+<link rel="icon" type="image/png" href="assets/favicon/Sem%20nome%20(500%20x%20500%20px).png">
+<link rel="apple-touch-icon" href="assets/favicon/Sem%20nome%20(500%20x%20500%20px).png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;overflow-x:hidden;}
+body{
+  font-family:'Space Grotesk',sans-serif;
+  background:var(--preto);color:var(--offwhite);
+  overflow-x:hidden;word-break:break-word;overflow-wrap:break-word;
+  -webkit-tap-highlight-color:transparent;
+  position:relative;
+  z-index:0;
+}
+h1,h2,h3,h4{font-family:'Archivo Black',sans-serif;}
+h1,h2,h3{text-wrap:balance;}
+a,button{touch-action:manipulation;}
+img{max-width:100%;}
+
+:root{
+  --preto:#15151A;
+  --offwhite:#F5F3EE;
+  --verde:#C8FF3D;
+  --laranja:#FF5A36;
+  --ciano:#3DFFDD;
+  --borda:3px solid #15151A;
+  --sombra:6px 6px 0 #15151A;
+  --sombra-sm:3px 3px 0 #15151A;
+  --nav-h:60px;
+  --pad-x:clamp(16px,5vw,40px);
+}
+
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.18;
+  background:
+    linear-gradient(135deg, rgba(255,90,54,.10) 0 2px, transparent 2px 16px),
+    linear-gradient(225deg, rgba(61,255,221,.06) 0 2px, transparent 2px 18px);
+  background-size:24px 24px,32px 32px;
+  mix-blend-mode:screen;
+  z-index:0;
+}
+section:not(#hero){
+  content-visibility:auto;
+  contain-intrinsic-size:1px 900px;
+}
+
+/* ─── CURSOR (desktop only) ─── */
+@media(hover:hover){*{cursor:none !important;}}
+.cur{
+  position:fixed;width:16px;height:16px;
+  background:var(--verde);border:2px solid var(--preto);
+  pointer-events:none;z-index:99999;
+  transform:translate(-50%,-50%);
+  transition:width .15s,height .15s,background .15s,border-color .15s;
+  display:none;will-change:transform;
+}
+@media(hover:hover){.cur{display:block;}}
+.cur.big{width:40px;height:40px;background:transparent;border-color:var(--verde);border-width:3px;}
+
+/* ─── SCROLL REVEAL ─── */
+.rev{opacity:0;transform:translateY(32px);transition:opacity .6s ease,transform .6s ease;}
+.rev.fl{transform:translateX(-36px);}
+.rev.fr{transform:translateX(36px);}
+.rev.on{opacity:1 !important;transform:none !important;}
+.rev.d1{transition-delay:.07s;}
+.rev.d2{transition-delay:.14s;}
+.rev.d3{transition-delay:.21s;}
+.rev.d4{transition-delay:.28s;}
+/* On mobile: disable delays for snappier feel */
+@media(max-width:600px){
+  .rev.d1,.rev.d2,.rev.d3,.rev.d4{transition-delay:0s;}
+  .rev.fl,.rev.fr{transform:translateY(32px);}
+}
+
+/* ─── RIPPLE ─── */
+.rip{position:relative;overflow:hidden;}
+.rip-dot{
+  position:absolute;width:0;height:0;border-radius:50%;
+  background:rgba(255,255,255,.22);
+  transform:translate(-50%,-50%);
+  animation:ripple .55s ease-out forwards;
+  pointer-events:none;
+}
+@keyframes ripple{to{width:280px;height:280px;opacity:0;}}
+
+/* ─── NAV ─── */
+nav{
+  position:fixed;top:0;width:100%;z-index:1000;
+  background:var(--preto);border-bottom:var(--borda);
+  padding:0 var(--pad-x);height:var(--nav-h);
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+}
+.logo{
+  font-family:'Archivo Black',sans-serif;
+  font-size:clamp(1.1rem,4vw,1.4rem);
+  color:var(--verde);letter-spacing:-1px;white-space:nowrap;
+  display:flex;align-items:center;gap:10px;
+}
+.logo span{color:var(--offwhite);}
+.logo-mark{
+  width:34px;height:34px;flex:0 0 34px;
+  object-fit:contain;display:block;
+  filter:drop-shadow(2px 2px 0 rgba(0,0,0,.2));
+}
+.logo-text{display:inline-flex;align-items:baseline;gap:0;line-height:1;}
+.btn-nav{
+  background:var(--verde);color:var(--preto);
+  border:var(--borda);box-shadow:var(--sombra-sm);
+  padding:9px 16px;font-family:'Archivo Black',sans-serif;
+  font-size:clamp(.68rem,.9vw+.5rem,.82rem);
+  text-decoration:none;letter-spacing:.4px;text-transform:uppercase;
+  white-space:nowrap;flex-shrink:0;
+  transition:box-shadow .1s,transform .1s;min-height:40px;
+  display:flex;align-items:center;
+}
+.btn-nav:hover{box-shadow:5px 5px 0 var(--preto);transform:translate(-1px,-1px);}
+.btn-nav:active{box-shadow:1px 1px 0 var(--preto);transform:translate(2px,2px);}
+@media(max-width:420px){
+  .btn-nav-text{display:none;}
+  .btn-nav::after{content:'WhatsApp →';}
+}
+
+/* ─── MARQUEE ─── */
+.mq-wrap{
+  margin-top:var(--nav-h);
+  background:var(--verde);border-top:var(--borda);border-bottom:var(--borda);
+  overflow:hidden;padding:11px 0;
+}
+.mq-wrap:hover .mq-track{animation-play-state:paused;}
+.mq-track{display:flex;width:max-content;animation:mq 28s linear infinite;}
+.mq-item{
+  font-family:'Archivo Black',sans-serif;
+  font-size:clamp(.78rem,.9rem,1rem);
+  color:var(--preto);padding:0 24px;text-transform:uppercase;
+  letter-spacing:1px;white-space:nowrap;
+}
+.mq-item::before{content:'✦';margin-right:24px;}
+@keyframes mq{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* ─── COMMON ─── */
+section{padding:clamp(56px,8vw,100px) var(--pad-x);}
+.inner{max-width:1200px;margin:0 auto;}
+.tag{
+  display:inline-block;padding:5px 14px;font-size:.7rem;font-weight:700;
+  letter-spacing:3px;text-transform:uppercase;border:var(--borda);margin-bottom:20px;
+}
+.tv{background:var(--verde);color:var(--preto);}
+.tl{background:var(--laranja);color:var(--offwhite);}
+.td{background:var(--preto);color:var(--verde);}
+.section-title{
+  font-size:clamp(1.75rem,4.5vw,3.4rem);
+  line-height:1.08;margin-bottom:14px;
+  text-shadow:0 2px 0 rgba(0,0,0,.12);
+}
+.divider{width:48px;height:4px;background:var(--verde);margin-bottom:28px;}
+.divider-k{background:var(--preto);}
+.slead{font-size:clamp(.95rem,1.1rem,1.1rem);line-height:1.7;max-width:580px;margin-bottom:48px;}
+
+/* Botões */
+.btn-g{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  background:var(--verde);color:var(--preto);
+  border:var(--borda);box-shadow:var(--sombra);
+  padding:16px 28px;font-family:'Archivo Black',sans-serif;
+  font-size:clamp(.9rem,.95rem,1rem);text-decoration:none;text-transform:uppercase;
+  transition:box-shadow .1s,transform .1s;min-height:52px;
+}
+.btn-g:hover{box-shadow:8px 8px 0 var(--preto);transform:translate(-2px,-2px);}
+.btn-g:active{box-shadow:2px 2px 0 var(--preto);transform:translate(4px,4px);}
+
+.btn-k{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  background:var(--preto);color:var(--verde);
+  border:3px solid var(--preto);box-shadow:6px 6px 0 rgba(21,21,26,.4);
+  padding:16px 28px;font-family:'Archivo Black',sans-serif;
+  font-size:clamp(.9rem,.95rem,1rem);text-decoration:none;text-transform:uppercase;
+  transition:box-shadow .1s,transform .1s;min-height:52px;
+}
+.btn-k:hover{box-shadow:9px 9px 0 rgba(21,21,26,.5);transform:translate(-2px,-2px);}
+.btn-k:active{box-shadow:1px 1px 0 rgba(21,21,26,.4);transform:translate(5px,5px);}
+
+.btn-o{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  background:transparent;color:var(--preto);
+  border:3px solid var(--preto);box-shadow:6px 6px 0 rgba(21,21,26,.2);
+  padding:16px 28px;font-family:'Archivo Black',sans-serif;
+  font-size:clamp(.9rem,.95rem,1rem);text-decoration:none;text-transform:uppercase;
+  transition:background .15s,color .15s,box-shadow .1s,transform .1s;min-height:52px;
+}
+.btn-o:hover{background:var(--preto);color:var(--verde);box-shadow:9px 9px 0 rgba(21,21,26,.3);transform:translate(-2px,-2px);}
+.btn-o:active{box-shadow:1px 1px 0 rgba(21,21,26,.2);transform:translate(5px,5px);}
+
+/* ─── HERO ─── */
+#hero{
+  min-height:100svh;background:var(--preto);
+  position:relative;overflow:hidden;
+  display:flex;align-items:center;
+  padding:clamp(72px,10vw,100px) var(--pad-x) clamp(48px,6vw,80px);
+  isolation:isolate;
+}
+#hero::before{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(200,255,61,.07) 1px,transparent 1px);
+  background-size:30px 30px;pointer-events:none;z-index:0;
+}
+#hero::after{
+  content:'';position:absolute;left:0;width:100%;height:2px;
+  background:linear-gradient(to right,transparent,rgba(200,255,61,.22),transparent);
+  animation:scan 7s linear infinite;pointer-events:none;z-index:0;
+}
+@keyframes scan{0%{top:-2px;}100%{top:100%;}}
+
+.hero-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;
+  max-width:1200px;margin:0 auto;width:100%;position:relative;z-index:1;
+}
+.hero-badge{
+  display:inline-block;
+  background:var(--laranja);color:var(--offwhite);
+  border:var(--borda);box-shadow:var(--sombra-sm);
+  padding:5px 14px;font-size:.72rem;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;
+  margin-bottom:20px;transform:rotate(-1.5deg);
+  animation:floatBadge 4.8s ease-in-out infinite;
+}
+@keyframes floatBadge{0%,100%{transform:rotate(-1.5deg) translateY(0);}50%{transform:rotate(-1.5deg) translateY(-6px);}}
+.hero-hl{
+  font-size:clamp(1.9rem,5vw,4.4rem);
+  line-height:1.05;color:var(--offwhite);margin-bottom:20px;
+  text-shadow:0 4px 0 rgba(0,0,0,.16);
+}
+
+/* Glitch */
+.glitch{position:relative;color:var(--verde);display:inline;}
+.glitch::before,.glitch::after{
+  content:attr(data-g);position:absolute;top:0;left:0;width:100%;height:100%;
+}
+.glitch::before{color:var(--laranja);animation:g1 5s infinite;clip-path:polygon(0 15%,100% 15%,100% 40%,0 40%);}
+.glitch::after{color:var(--ciano);animation:g2 5s infinite;clip-path:polygon(0 62%,100% 62%,100% 82%,0 82%);}
+@keyframes g1{0%,86%,100%{opacity:0;transform:translate(0);}88%{opacity:1;transform:translate(-4px,1px);}90%{opacity:1;transform:translate(3px,-1px);}92%{opacity:0;}}
+@keyframes g2{0%,86%,100%{opacity:0;transform:translate(0);}88%{opacity:1;transform:translate(4px,-2px);}90%{opacity:1;transform:translate(-3px,1px);}92%{opacity:0;}}
+
+.hero-sub{font-size:clamp(.95rem,1.5vw,1.1rem);line-height:1.7;color:#9090a0;margin-bottom:32px;max-width:480px;}
+.hero-card-wrap{position:relative;}
+.hero-card{
+  background:var(--offwhite);border:var(--borda);box-shadow:var(--sombra);
+  padding:28px;position:relative;overflow:hidden;
+}
+.hero-card::before{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(115deg,transparent 0 38%,rgba(255,255,255,.42) 45%,transparent 52% 100%);
+  transform:translateX(-140%);
+  animation:shine 6.4s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes shine{0%,40%{transform:translateX(-140%);}75%,100%{transform:translateX(140%);}}
+.hero-card-lbl{font-size:.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#888;margin-bottom:18px;}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.stat{background:var(--preto);border:var(--borda);box-shadow:var(--sombra-sm);padding:18px 14px;text-align:center;}
+.stat-n{font-family:'Archivo Black',sans-serif;font-size:1.8rem;color:var(--verde);display:block;line-height:1.1;}
+.stat-l{font-size:.72rem;color:var(--offwhite);opacity:.65;margin-top:4px;line-height:1.3;}
+.ftag{
+  position:absolute;top:-18px;right:-14px;
+  background:var(--verde);color:var(--preto);
+  border:var(--borda);box-shadow:var(--sombra-sm);
+  padding:9px 16px;font-family:'Archivo Black',sans-serif;
+  font-size:.75rem;text-transform:uppercase;
+  animation:bob 3.5s ease-in-out infinite;
+}
+@keyframes bob{0%,100%{transform:rotate(3deg) translateY(0);}50%{transform:rotate(3deg) translateY(-10px);}}
+
+/* ─── PROBLEMA ─── */
+#problema{background:var(--offwhite);}
+#problema .section-title{color:var(--preto);}
+.prob-lead{font-size:clamp(.95rem,1.1rem,1.15rem);line-height:1.7;color:var(--preto);max-width:600px;margin-bottom:44px;}
+.prob-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.prob-card{
+  background:var(--preto);border:var(--borda);box-shadow:var(--sombra);
+  padding:clamp(20px,4vw,32px);
+  transition:transform .2s ease,box-shadow .2s ease;
+}
+.prob-card:hover{transform:translate(-4px,-4px);box-shadow:10px 10px 0 var(--preto);}
+.prob-icon{font-size:2rem;display:block;margin-bottom:12px;}
+.prob-card h3{font-size:clamp(.95rem,1.1rem,1.1rem);color:var(--verde);margin-bottom:8px;}
+.prob-card p{font-size:clamp(.82rem,.88rem,.9rem);line-height:1.6;color:#9090a0;}
+
+/* ─── SOLUÇÃO ─── */
+#solucao{background:var(--preto);}
+.sol-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;}
+.sol-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.sol-list li{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:16px 18px;border:2px solid #252530;background:#1b1b22;
+  transition:border-color .2s,transform .2s;
+}
+.sol-list li:hover{border-color:var(--verde);transform:translateX(5px);}
+.sol-ck{
+  background:var(--verde);color:var(--preto);
+  width:24px;height:24px;min-width:24px;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:.78rem;border:2px solid var(--preto);margin-top:1px;
+}
+.sol-txt strong{display:block;font-size:.92rem;color:var(--offwhite);margin-bottom:3px;}
+.sol-txt span{font-size:.82rem;color:#707080;}
+.sol-side{display:flex;flex-direction:column;gap:16px;}
+.ba-mini{display:grid;grid-template-columns:1fr 1fr;border:var(--borda);box-shadow:var(--sombra);overflow:hidden;}
+.bm-b{background:#252530;padding:22px 14px;text-align:center;}
+.bm-a{background:var(--verde);padding:22px 14px;text-align:center;}
+.bm-lbl{font-size:.62rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;display:block;margin-bottom:9px;}
+.bm-b .bm-lbl{color:#555;}
+.bm-a .bm-lbl{color:rgba(21,21,26,.5);}
+.bm-shop{border:2px solid;padding:9px 6px;font-size:.7rem;font-weight:700;}
+.bm-b .bm-shop{border-color:#3a3a4a;color:#444;background:#1e1e26;}
+.bm-a .bm-shop{border-color:var(--preto);color:var(--preto);background:var(--offwhite);}
+.sol-callout{background:#1b1b22;border:var(--borda);box-shadow:var(--sombra);padding:24px;}
+.sol-callout p:first-child{font-size:.95rem;font-weight:700;color:var(--offwhite);margin-bottom:8px;}
+.sol-callout p:last-child{font-size:.85rem;color:#707080;line-height:1.7;}
+
+/* ─── COMO FUNCIONA ─── */
+#como{background:var(--offwhite);}
+#como .section-title{color:var(--preto);}
+#como .slead{color:var(--preto);}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+.step{
+  border:var(--borda);box-shadow:var(--sombra);overflow:hidden;
+  transition:transform .2s ease,box-shadow .2s ease;
+}
+.step:hover{transform:translate(-4px,-4px);box-shadow:10px 10px 0 var(--preto);}
+.step-top{background:var(--preto);padding:18px 22px;border-bottom:var(--borda);}
+.step-n{font-family:'Archivo Black',sans-serif;font-size:2.6rem;color:var(--verde);line-height:1;display:block;}
+.step-body{background:var(--offwhite);padding:18px 22px;}
+.step-title{font-family:'Archivo Black',sans-serif;font-size:.9rem;color:var(--preto);margin-bottom:7px;}
+.step-desc{font-size:.82rem;line-height:1.6;color:#444;}
+
+/* ─── POR QUE VIZZU ─── */
+#porque{background:var(--preto);}
+.trust-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+.trust-card{
+  background:#1b1b22;border:var(--borda);
+  box-shadow:6px 6px 0 var(--verde);
+  padding:clamp(20px,3.5vw,32px);
+  display:flex;align-items:flex-start;gap:18px;
+  transition:border-color .2s,transform .2s,box-shadow .2s;
+}
+.trust-card:hover{border-color:var(--verde);transform:translate(-4px,-4px);box-shadow:10px 10px 0 var(--verde);}
+.trust-ico{
+  font-size:1.5rem;width:48px;height:48px;min-width:48px;
+  background:var(--verde);border:var(--borda);
+  display:flex;align-items:center;justify-content:center;
+}
+.trust-txt h3{font-size:.95rem;color:var(--verde);margin-bottom:7px;}
+.trust-txt p{font-size:.86rem;color:#707080;line-height:1.6;}
+
+/* ─── PREÇOS ─── */
+#precos{background:var(--offwhite);}
+#precos .section-title{color:var(--preto);}
+#precos .slead{color:var(--preto);}
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start;}
+.pc{border:var(--borda);box-shadow:var(--sombra);overflow:hidden;}
+.pc.feat{box-shadow:8px 8px 0 var(--preto);transform:scale(1.025);}
+.pc{position:relative;isolation:isolate;}
+.pc::before{
+  content:'';
+  position:absolute;left:0;top:0;right:0;height:6px;
+  background:linear-gradient(90deg,var(--verde),var(--laranja),var(--ciano),var(--verde));
+  background-size:200% 100%;
+  animation:barflow 7s linear infinite;
+}
+@keyframes barflow{from{background-position:0 0;}to{background-position:200% 0;}}
+.pc-head{padding:clamp(18px,3vw,26px) clamp(18px,3vw,26px) 18px;border-bottom:var(--borda);position:relative;}
+.pc:nth-child(1) .pc-head{background:var(--preto);color:var(--offwhite);}
+.pc:nth-child(2) .pc-head{background:var(--verde);color:var(--preto);}
+.pc:nth-child(3) .pc-head{background:var(--preto);color:var(--offwhite);}
+.plan-nm{font-family:'Archivo Black',sans-serif;font-size:.78rem;letter-spacing:3px;text-transform:uppercase;opacity:.65;margin-bottom:9px;}
+.plan-pr{font-family:'Archivo Black',sans-serif;font-size:clamp(2rem,4vw,2.8rem);line-height:1;margin-bottom:4px;}
+.plan-in{font-size:.82rem;opacity:.65;margin-bottom:3px;}
+.plan-dl{font-size:.75rem;opacity:.5;}
+.pix{
+  display:inline-flex;align-items:center;gap:5px;
+  margin-top:11px;padding:5px 10px;font-size:.72rem;font-weight:700;border:2px solid;
+}
+.pc:nth-child(1) .pix,.pc:nth-child(3) .pix{background:var(--verde);color:var(--preto);border-color:var(--verde);}
+.pc:nth-child(2) .pix{background:var(--preto);color:var(--verde);border-color:var(--preto);}
+.pop-tag{
+  position:absolute;top:-12px;right:14px;
+  background:var(--laranja);color:var(--offwhite);
+  border:var(--borda);padding:3px 9px;
+  font-size:.64rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  animation:pop 2s ease-in-out infinite;
+}
+@keyframes pop{0%,100%{transform:rotate(2deg) scale(1);}50%{transform:rotate(2deg) scale(1.06);}}
+.pc-body{padding:clamp(18px,3vw,26px);background:var(--offwhite);}
+.pc-feats{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:22px;}
+.pc-feats li{display:flex;align-items:flex-start;gap:9px;font-size:.86rem;color:var(--preto);line-height:1.5;}
+.fck{
+  background:var(--verde);color:var(--preto);
+  width:18px;height:18px;min-width:18px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.68rem;font-weight:900;border:1.5px solid var(--preto);margin-top:2px;
+}
+.pc-cta{
+  display:block;text-align:center;padding:14px 18px;min-height:48px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Archivo Black',sans-serif;font-size:.82rem;
+  text-decoration:none;text-transform:uppercase;letter-spacing:1px;
+  border:var(--borda);box-shadow:4px 4px 0 var(--preto);
+  transition:box-shadow .1s,transform .1s;
+}
+.pc:nth-child(1) .pc-cta,.pc:nth-child(3) .pc-cta{background:var(--preto);color:var(--verde);}
+.pc:nth-child(2) .pc-cta{background:var(--verde);color:var(--preto);}
+.pc-cta:hover{box-shadow:7px 7px 0 var(--preto);transform:translate(-2px,-2px);}
+.pc-cta:active{box-shadow:1px 1px 0 var(--preto);transform:translate(3px,3px);}
+
+/* ─── FAQ ─── */
+#faq{background:var(--preto);}
+.faq-wrap{border:var(--borda);max-width:800px;}
+.faq-item{border-bottom:var(--borda);}
+.faq-item:last-child{border-bottom:none;}
+.faq-btn{
+  width:100%;background:transparent;border:none;
+  padding:20px clamp(16px,4vw,26px);text-align:left;
+  display:flex;justify-content:space-between;align-items:flex-start;gap:14px;
+  color:var(--offwhite);font-family:'Archivo Black',sans-serif;
+  font-size:clamp(.84rem,.92rem,.95rem);
+  transition:background .18s;min-height:60px;
+}
+.faq-btn:hover{background:#1c1c24;}
+.faq-btn.open{background:var(--verde);color:var(--preto);}
+.faq-ico{
+  width:26px;height:26px;min-width:26px;border:2px solid currentColor;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;font-weight:900;
+  transition:transform .2s;
+  margin-top:1px;
+}
+.faq-btn.open .faq-ico{transform:rotate(45deg);}
+.faq-ans{max-height:0;overflow:hidden;transition:max-height .32s ease;}
+.faq-ans.open{max-height:300px;}
+.faq-ans-in{padding:0 clamp(16px,4vw,26px) 22px;font-size:clamp(.84rem,.9rem,.9rem);line-height:1.75;color:#9090a8;}
+
+/* ─── CTA FINAL ─── */
+#cta-final{background:var(--verde);border-top:var(--borda);padding:clamp(64px,8vw,100px) var(--pad-x);}
+#cta-final .section-title{color:var(--preto);}
+.cta-in{max-width:780px;margin:0 auto;text-align:center;}
+.cta-sub{font-size:clamp(.95rem,1.2vw,1.1rem);color:rgba(21,21,26,.65);margin-bottom:40px;line-height:1.65;}
+.cta-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:28px;}
+.cta-ct{font-size:.86rem;color:rgba(21,21,26,.55);}
+.cta-ct a{color:var(--preto);font-weight:700;text-decoration:none;border-bottom:2px solid var(--preto);}
+
+/* ─── MOBILE CTA BAR ─── */
+.mobbar{
+  position:fixed;
+  left:12px;right:12px;bottom:12px;
+  display:none;
+  gap:10px;
+  z-index:1200;
+}
+.mobbar a{
+  min-height:54px;
+  border-radius:6px;
+  border:var(--borda);
+  box-shadow:var(--sombra-sm);
+  font-family:'Archivo Black',sans-serif;
+  font-size:.78rem;
+  text-decoration:none;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+}
+.mobbar .mb-wa{background:var(--verde);color:var(--preto);}
+.mobbar .mb-pr{background:var(--preto);color:var(--offwhite);}
+
+/* ─── WHATSAPP FLOAT ─── */
+.wa-float{
+  position:fixed;
+  right:14px;
+  bottom:14px;
+  width:58px;
+  height:58px;
+  border-radius:50%;
+  background:var(--verde);
+  color:var(--preto);
+  border:var(--borda);
+  box-shadow:var(--sombra);
+  z-index:1250;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  transition:transform .15s ease,box-shadow .15s ease;
+}
+.wa-float:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--preto);}
+.wa-float:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--preto);}
+
+/* ─── FOOTER ─── */
+footer{
+  background:var(--preto);border-top:var(--borda);
+  padding:clamp(24px,4vw,36px) var(--pad-x);
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;
+}
+.f-logo{font-family:'Archivo Black',sans-serif;font-size:clamp(1.1rem,1.3rem,1.3rem);color:var(--verde);}
+.f-logo span{color:var(--offwhite);}
+.f-links{display:flex;gap:16px;flex-wrap:wrap;}
+.f-links a{color:#666;text-decoration:none;font-size:.8rem;transition:color .2s;min-height:32px;display:flex;align-items:center;}
+.f-links a:hover{color:var(--verde);}
+.f-copy{font-size:.75rem;color:#444;}
+
+/* ═══════════════════════════
+   RESPONSIVE
+═══════════════════════════ */
+
+/* Tablet */
+@media(max-width:960px){
+  :root{--nav-h:58px;}
+  .hero-grid{grid-template-columns:1fr;gap:28px;align-items:start;}
+  .hero-card-wrap{display:block;max-width:560px;width:100%;}
+  .prob-grid{grid-template-columns:1fr;}
+  .sol-grid{grid-template-columns:1fr;}
+  .steps{grid-template-columns:repeat(2,1fr);}
+  .trust-grid{grid-template-columns:1fr;}
+  .price-grid{grid-template-columns:1fr;max-width:480px;}
+  .pc.feat{transform:none;box-shadow:var(--sombra);}
+  .pc{max-width:100%;}
+  footer{flex-direction:column;text-align:center;}
+  .f-links{justify-content:center;}
+}
+
+/* Large mobile */
+@media(max-width:640px){
+  :root{--nav-h:56px;}
+  section{padding:48px var(--pad-x);}
+  body::before{opacity:.08;background-size:18px 18px,24px 24px;}
+  #hero::after,.hero-card::before,.ftag,.pop-tag,.pc::before{animation:none !important;}
+  .prob-grid{grid-template-columns:1fr;}
+  .steps{grid-template-columns:1fr;}
+  .trust-grid{grid-template-columns:1fr;}
+  .price-grid{max-width:100%;}
+  .hero-sub{max-width:100%;}
+  .slead{max-width:100%;}
+  .prob-lead{max-width:100%;}
+  .mq-track{animation-duration:22s;}
+  .mq-item{padding:0 18px;}
+  .mq-item::before{margin-right:14px;}
+  .hero-badge,.ftag,.hero-card::before,.pc::before,.pop-tag{animation:none !important;}
+  .wa-float{display:flex;}
+}
+
+/* Small mobile */
+@media(max-width:500px){
+  body{padding-bottom:148px;}
+  .hero-grid{gap:20px;}
+  .hero-badge{margin-bottom:14px;}
+  .hero-sub{margin-bottom:24px;font-size:.96rem;line-height:1.62;}
+  .trust-card{flex-direction:column;gap:14px;}
+  .trust-ico{width:44px;height:44px;font-size:1.3rem;}
+  .cta-btns{flex-direction:column;align-items:stretch;}
+  .cta-btns .btn-k,.cta-btns .btn-o{width:100%;}
+  .btn-g{width:100%;max-width:380px;}
+  .stats-grid{grid-template-columns:1fr;gap:10px;}
+  .ba-mini{grid-template-columns:1fr;display:none;}
+  .sol-side{display:none;}
+  .hero-card{padding:18px;}
+  .hero-card-lbl{margin-bottom:14px;}
+  .stat{padding:13px 12px;}
+  .stat-n{font-size:1.55rem;}
+  .stat-l{font-size:.68rem;}
+  .step-top,.step-body{padding-left:18px;padding-right:18px;}
+  .plan-pr{font-size:2rem;}
+  .plan-nm{margin-bottom:6px;}
+  .plan-in{font-size:.78rem;}
+  .plan-dl{font-size:.7rem;}
+  .pc-feats{gap:8px;margin-bottom:18px;}
+  .pc-feats li{font-size:.82rem;line-height:1.45;}
+  .pc-head,.pc-body{padding-left:16px;padding-right:16px;}
+  .faq-btn{padding-top:18px;padding-bottom:18px;}
+  .faq-ans-in{padding-bottom:18px;}
+  .mobbar{display:grid;grid-template-columns:1.3fr .9fr;}
+}
+
+/* Very small mobile */
+@media(max-width:380px){
+  .logo{font-size:1.05rem;}
+  .logo-mark{width:30px;height:30px;flex-basis:30px;}
+  .hero-badge{font-size:.66rem;padding:4px 10px;}
+  .hero-hl{font-size:1.7rem;}
+  .plan-pr{font-size:1.9rem;}
+  .step-n{font-size:2.2rem;}
+  .section-title{font-size:1.65rem;}
+  .tag{font-size:.64rem;padding:4px 11px;}
+  .btn-nav{padding:8px 12px;}
+  .btn-g,.btn-k,.btn-o{min-height:50px;padding-left:18px;padding-right:18px;}
+  .mobbar a{font-size:.7rem;min-height:50px;}
+  .wa-float{width:54px;height:54px;right:12px;bottom:12px;}
+}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+    scroll-behavior:auto !important;
+  }
+  body::before{opacity:.06;}
+}
+
+/* Landscape mobile */
+@media(max-height:600px) and (max-width:900px){
+  #hero{min-height:auto;padding:80px var(--pad-x) 48px;}
+}
+</style>
+</head>
+<body>
+
+<div class="cur" id="cur"></div>
+
+<a class="wa-float rip" href="https://wa.me/5562981043763" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
+</a>
+
+<div class="mobbar" aria-label="Ações rápidas">
+  <a class="mb-wa rip" href="https://wa.me/5562981043763" target="_blank" rel="noopener">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
+    WhatsApp
+  </a>
+  <a class="mb-pr rip" href="#precos">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 5h14v14H5z"/></svg>
+    Planos
+  </a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">
+    <img class="logo-mark" src="assets/logo/Design%20sem%20nome%20(99).png" alt="VIZZU Digital">
+    <span class="logo-text">VIZZU<span> Digital</span></span>
+  </div>
+  <a href="https://wa.me/5562981043763" target="_blank" rel="noopener" class="btn-nav rip">
+    <span class="btn-nav-text">Falar no WhatsApp →</span>
+  </a>
+</nav>
+
+<!-- MARQUEE -->
+<div class="mq-wrap">
+  <div class="mq-track">
+    <span class="mq-item">Personalização FacilZap</span>
+    <span class="mq-item">Design que Vende</span>
+    <span class="mq-item">Identidade Visual</span>
+    <span class="mq-item">Moda Atacado</span>
+    <span class="mq-item">Mais Conversões</span>
+    <span class="mq-item">Loja Profissional</span>
+    <span class="mq-item">Revendedoras</span>
+    <span class="mq-item">VIZZU Digital</span>
+    <span class="mq-item">Personalização FacilZap</span>
+    <span class="mq-item">Design que Vende</span>
+    <span class="mq-item">Identidade Visual</span>
+    <span class="mq-item">Moda Atacado</span>
+    <span class="mq-item">Mais Conversões</span>
+    <span class="mq-item">Loja Profissional</span>
+    <span class="mq-item">Revendedoras</span>
+    <span class="mq-item">VIZZU Digital</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid">
+    <div>
+      <span class="hero-badge rev">✦ Especialista FacilZap</span>
+      <h1 class="hero-hl rev d1">
+        Sua loja merece um visual que
+        <span class="glitch" data-g="conquista">conquista</span>
+        antes mesmo da compra.
+      </h1>
+      <p class="hero-sub rev d2">A VIZZU Digital transforma lojas genéricas no FacilZap em marcas que transmitem credibilidade, profissionalismo e fazem suas clientes comprarem com confiança.</p>
+      <a href="https://wa.me/5562981043763" target="_blank" rel="noopener" class="btn-g rip rev d3">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.533 5.854L.057 23.6a.5.5 0 0 0 .609.61l5.795-1.517A11.943 11.943 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.95 0-3.782-.528-5.35-1.448l-.383-.228-3.97 1.04 1.058-3.866-.245-.397A9.956 9.956 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+        Quero minha loja personalizada
+      </a>
+    </div>
+    <div class="hero-card-wrap rev fr">
+      <div class="ftag">✦ Loja que vende</div>
+      <div class="hero-card">
+        <p class="hero-card-lbl">Resultados das nossas clientes</p>
+        <div class="stats-grid">
+          <div class="stat"><span class="stat-n" data-c="3" data-s="×">3×</span><span class="stat-l">mais confiança percebida</span></div>
+          <div class="stat"><span class="stat-n" data-c="60" data-p="+" data-s="%">+60%</span><span class="stat-l">taxa de retorno</span></div>
+          <div class="stat"><span class="stat-n" data-c="10" data-s=" dias úteis">10 dias úteis</span><span class="stat-l">prazo mínimo de entrega</span></div>
+          <div class="stat"><span class="stat-n" data-c="100" data-s="%">100%</span><span class="stat-l">clientes satisfeitas</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEMA -->
+<section id="problema">
+  <div class="inner">
+    <span class="tag tl rev">O Problema</span>
+    <h2 class="section-title rev d1">Loja igual à de todo mundo não vende.</h2>
+    <div class="divider divider-k rev d1"></div>
+    <p class="prob-lead rev d2">No FacilZap, milhares de revendedoras usam o mesmo layout padrão. Sua loja se perde na multidão, seus produtos não são valorizados e suas clientes não sentem a confiança que precisam para comprar.</p>
+    <div class="prob-grid">
+      <div class="prob-card rev d1"><span class="prob-icon">😔</span><h3>Aparência amadora</h3><p>O layout padrão não transmite profissionalismo. Sua cliente entra na loja e não sente que pode confiar na marca.</p></div>
+      <div class="prob-card rev d2"><span class="prob-icon">📦</span><h3>Catálogo desorganizado</h3><p>Sem estrutura visual clara, as clientes se perdem nos produtos, ficam confusas e acabam desistindo da compra.</p></div>
+      <div class="prob-card rev d3"><span class="prob-icon">📉</span><h3>Menos conversões</h3><p>Um site sem identidade própria afasta clientes antes delas verem seus preços. O design é o primeiro argumento de venda.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUÇÃO -->
+<section id="solucao">
+  <div class="inner">
+    <span class="tag tv rev">A Solução</span>
+    <h2 class="section-title rev d1" style="color:var(--offwhite)">Uma loja com <span style="color:var(--verde)">identidade, autoridade</span> e design para converter.</h2>
+    <div class="divider rev d1"></div>
+    <div class="sol-grid">
+      <ul class="sol-list">
+        <li class="rev d1"><div class="sol-ck">✓</div><div class="sol-txt"><strong>Identidade Visual Consistente</strong><span>Paleta, tipografia e elementos que representam sua marca de ponta a ponta.</span></div></li>
+        <li class="rev d2"><div class="sol-ck">✓</div><div class="sol-txt"><strong>Banners Profissionais</strong><span>Banners que destacam promoções e coleções com impacto visual real.</span></div></li>
+        <li class="rev d3"><div class="sol-ck">✓</div><div class="sol-txt"><strong>Catálogo Estruturado</strong><span>Organização visual que facilita a navegação e incentiva mais compras.</span></div></li>
+        <li class="rev d4"><div class="sol-ck">✓</div><div class="sol-txt"><strong>Carrinho Otimizado</strong><span>Redesign do checkout para reduzir abandono e aumentar conclusões.</span></div></li>
+        <li class="rev d4"><div class="sol-ck">✓</div><div class="sol-txt"><strong>Código Personalizado</strong><span>No pacote Completo, modificamos o site direto no código — sem limitações.</span></div></li>
+      </ul>
+      <div class="sol-side rev fr">
+        <div class="ba-mini">
+          <div class="bm-b"><span class="bm-lbl">Antes</span><div class="bm-shop">Loja Genérica 😐</div></div>
+          <div class="bm-a"><span class="bm-lbl">Depois</span><div class="bm-shop" style="border-color:var(--preto);color:var(--preto);background:var(--offwhite);">Sua Marca ✦</div></div>
+        </div>
+        <div class="sol-callout">
+          <p>Especialistas em FacilZap</p>
+          <p>Trabalhamos 100% com FacilZap para moda atacado. Conhecemos cada recurso da plataforma — entregamos resultado, não promessa.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section id="como">
+  <div class="inner">
+    <span class="tag td rev">Como Funciona</span>
+    <h2 class="section-title rev d1">Do primeiro contato à loja no ar.</h2>
+    <div class="divider divider-k rev d1"></div>
+    <p class="slead rev d2">Um processo simples, transparente e com prazo garantido.</p>
+    <div class="steps">
+      <div class="step rev d1">
+        <div class="step-top"><span class="step-n">01</span></div>
+        <div class="step-body"><p class="step-title">Fale Conosco</p><p class="step-desc">Entre em contato pelo WhatsApp ou e-mail — sem burocracia, sem espera.</p></div>
+      </div>
+      <div class="step rev d2">
+        <div class="step-top"><span class="step-n">02</span></div>
+        <div class="step-body"><p class="step-title">Briefing</p><p class="step-desc">Você compartilha as referências, cores e perfil da sua loja. A gente escuta tudo.</p></div>
+      </div>
+      <div class="step rev d3">
+        <div class="step-top"><span class="step-n">03</span></div>
+        <div class="step-body"><p class="step-title">Produção</p><p class="step-desc">Nossa equipe cria o layout personalizado com base no seu plano e identidade de marca.</p></div>
+      </div>
+      <div class="step rev d4">
+        <div class="step-top"><span class="step-n">04</span></div>
+        <div class="step-body"><p class="step-title">Entrega &amp; Revisão</p><p class="step-desc">Você recebe, aprova, pede ajustes — e sua loja vai ao ar renovada.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- POR QUE VIZZU -->
+<section id="porque">
+  <div class="inner">
+    <span class="tag tv rev">Por que a VIZZU?</span>
+    <h2 class="section-title rev d1">Comprometimento que você <span style="color:var(--verde)">sente na entrega.</span></h2>
+    <div class="divider rev d1"></div>
+    <div class="trust-grid">
+      <div class="trust-card rev d1"><div class="trust-ico">⬡</div><div class="trust-txt"><h3>Especialistas em FacilZap</h3><p>Só trabalhamos com FacilZap. Conhecemos cada recurso, limitação e possibilidade da plataforma.</p></div></div>
+      <div class="trust-card rev d2"><div class="trust-ico">⚡</div><div class="trust-txt"><h3>Entrega no Prazo</h3><p>Comprometimento real com os prazos combinados. Você sabe exatamente quando sua loja fica pronta.</p></div></div>
+      <div class="trust-card rev d3"><div class="trust-ico">✦</div><div class="trust-txt"><h3>Suporte Incluído</h3><p>Revisões e suporte pós-entrega em todos os planos. Você não fica sozinha depois da entrega.</p></div></div>
+      <div class="trust-card rev d4"><div class="trust-ico">◈</div><div class="trust-txt"><h3>Atendimento Personalizado</h3><p>Cada loja é tratada de forma única. Estudamos o seu negócio antes de criar qualquer coisa.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PREÇOS -->
+<section id="precos">
+  <div class="inner">
+    <span class="tag td rev">Planos &amp; Preços</span>
+    <h2 class="section-title rev d1">Escolha o plano ideal para sua loja.</h2>
+    <div class="divider divider-k rev d1"></div>
+    <p class="slead rev d2">Sem contratos ou taxas ocultas. Você escolhe, a gente entrega.</p>
+    <div class="price-grid">
+
+      <div class="pc rev d1">
+        <div class="pc-head">
+          <p class="plan-nm">Básico</p>
+          <p class="plan-pr">R$&nbsp;790</p>
+          <p class="plan-in">em até 3× sem juros</p>
+          <p class="plan-dl">Prazo: até 10 dias úteis</p>
+          <div class="pix">⬡ 10% OFF no Pix → R$&nbsp;711</div>
+        </div>
+        <div class="pc-body">
+          <ul class="pc-feats">
+            <li><div class="fck">✓</div> Mudança completa da paleta de cores</li>
+            <li><div class="fck">✓</div> 1 banner personalizado</li>
+            <li><div class="fck">✓</div> Estruturação do catálogo de produtos</li>
+            <li><div class="fck">✓</div> Suporte pós-entrega por 7 dias</li>
+          </ul>
+          <a href="https://wa.me/5562981043763?text=Ol%C3%A1!%20Quero%20o%20pacote%20B%C3%A1sico%20da%20VIZZU%20Digital." target="_blank" rel="noopener" class="pc-cta rip">Quero este plano →</a>
+        </div>
+      </div>
+
+      <div class="pc feat rev d2">
+        <div class="pc-head">
+          <div class="pop-tag">Mais Popular</div>
+          <p class="plan-nm">Intermediário</p>
+          <p class="plan-pr">R$&nbsp;1.490</p>
+          <p class="plan-in">em até 6× sem juros</p>
+          <p class="plan-dl">Prazo: até 14 dias úteis</p>
+          <div class="pix">⬡ 10% OFF no Pix → R$&nbsp;1.341</div>
+        </div>
+        <div class="pc-body">
+          <ul class="pc-feats">
+            <li><div class="fck">✓</div> 3 banners personalizados</li>
+            <li><div class="fck">✓</div> Reestruturação completa da paleta de cores</li>
+            <li><div class="fck">✓</div> Redesign do carrinho de compras</li>
+            <li><div class="fck">✓</div> Suporte pós-entrega por 14 dias</li>
+          </ul>
+          <a href="https://wa.me/5562981043763?text=Ol%C3%A1!%20Quero%20o%20pacote%20Intermedi%C3%A1rio%20da%20VIZZU%20Digital." target="_blank" rel="noopener" class="pc-cta rip">Quero este plano →</a>
+        </div>
+      </div>
+
+      <div class="pc rev d3">
+        <div class="pc-head">
+          <p class="plan-nm">Completo</p>
+          <p class="plan-pr">R$&nbsp;2.490</p>
+          <p class="plan-in">em até 9× sem juros</p>
+          <p class="plan-dl">Prazo: até 20 dias úteis</p>
+          <div class="pix">⬡ 10% OFF no Pix → R$&nbsp;2.241</div>
+        </div>
+        <div class="pc-body">
+          <ul class="pc-feats">
+            <li><div class="fck">✓</div> Redesign completo do site via código</li>
+            <li><div class="fck">✓</div> Estudo de paleta de cores e identidade visual</li>
+            <li><div class="fck">✓</div> Reestruturação total da loja</li>
+            <li><div class="fck">✓</div> Suporte pós-entrega por 30 dias</li>
+          </ul>
+          <a href="https://wa.me/5562981043763?text=Ol%C3%A1!%20Quero%20o%20pacote%20Completo%20da%20VIZZU%20Digital." target="_blank" rel="noopener" class="pc-cta rip">Quero este plano →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="inner">
+    <span class="tag tv rev">Dúvidas Frequentes</span>
+    <h2 class="section-title rev d1">Ainda tem dúvidas?</h2>
+    <div class="divider rev d1"></div>
+    <div class="faq-wrap rev d2">
+      <div class="faq-item">
+        <button class="faq-btn" onclick="faq(this)">
+          Preciso ter uma loja FacilZap ativa?
+          <div class="faq-ico">+</div>
+        </button>
+        <div class="faq-ans"><div class="faq-ans-in">Sim, você precisa ter uma conta ativa no FacilZap. Se ainda não tem, podemos orientar como criar. Trabalhamos com lojas novas e com lojas já em funcionamento.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="faq(this)">
+          Como funciona o processo de entrega?
+          <div class="faq-ico">+</div>
+        </button>
+        <div class="faq-ans"><div class="faq-ans-in">Após o pagamento, fazemos o briefing e coletamos as informações da sua loja. A partir daí trabalhamos no layout e entregamos dentro do prazo do plano — 10, 14 ou 20 dias úteis. Você acompanha e aprova antes de publicar.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="faq(this)">
+          Posso pedir alterações após a entrega?
+          <div class="faq-ico">+</div>
+        </button>
+        <div class="faq-ans"><div class="faq-ans-in">Sim! Todos os planos incluem suporte pós-entrega (7, 14 ou 30 dias). Dentro desse período, ajustes dentro do escopo são sem custo adicional. Mudanças maiores são orçadas separadamente.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="faq(this)">
+          Quais formas de pagamento são aceitas?
+          <div class="faq-ico">+</div>
+        </button>
+        <div class="faq-ans"><div class="faq-ans-in">Aceitamos Pix (com 10% de desconto), cartão de crédito parcelado sem juros até o limite do plano, e transferência bancária. Processo seguro com comprovante.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section id="cta-final">
+  <div class="cta-in">
+    <span class="tag td rev" style="margin-bottom:20px;">Vamos começar?</span>
+    <h2 class="section-title rev d1" style="margin-bottom:16px;">Sua loja profissional está a uma mensagem de distância.</h2>
+    <p class="cta-sub rev d2">Fale com a gente agora pelo WhatsApp ou mande um e-mail.<br>Respondemos em até 2 horas em dias úteis.</p>
+    <div class="cta-btns rev d3">
+      <a href="https://wa.me/5562981043763" target="_blank" rel="noopener" class="btn-k rip">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.533 5.854L.057 23.6a.5.5 0 0 0 .609.61l5.795-1.517A11.943 11.943 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.95 0-3.782-.528-5.35-1.448l-.383-.228-3.97 1.04 1.058-3.866-.245-.397A9.956 9.956 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+        Falar no WhatsApp
+      </a>
+      <a href="mailto:vizzudigital@hotmail.com" class="btn-o rip">✉ vizzudigital@hotmail.com</a>
+    </div>
+    <p class="cta-ct rev d4">Ou ligue: <a href="https://wa.me/5562981043763" target="_blank" rel="noopener">(62) 98104-3763</a></p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-logo">VIZZU<span> Digital</span></div>
+  <nav class="f-links" aria-label="Rodapé">
+    <a href="#hero">Início</a>
+    <a href="#problema">O Problema</a>
+    <a href="#solucao">Solução</a>
+    <a href="#como">Como Funciona</a>
+    <a href="#precos">Preços</a>
+    <a href="#faq">FAQ</a>
+  </nav>
+  <p class="f-copy">© 2025 VIZZU Digital. Especialistas em FacilZap.</p>
+</footer>
+
+<script>
+/* ── CURSOR ── */
+(function(){
+  if(!window.matchMedia('(hover:hover)').matches)return;
+  var c=document.getElementById('cur');
+  document.addEventListener('mousemove',function(e){
+    c.style.left=e.clientX+'px';c.style.top=e.clientY+'px';
+  },{passive:true});
+  document.querySelectorAll('a,button,.step,.prob-card,.trust-card,.pc').forEach(function(el){
+    el.addEventListener('mouseenter',function(){c.classList.add('big');});
+    el.addEventListener('mouseleave',function(){c.classList.remove('big');});
+  });
+})();
+
+/* ── SCROLL REVEAL ── */
+(function(){
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);}
+    });
+  },{threshold:0.08});
+  document.querySelectorAll('.rev').forEach(function(el){io.observe(el);});
+})();
+
+/* ── COUNTER ANIMATION ── */
+(function(){
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting&&!e.target.dataset.done){
+        e.target.dataset.done='1';
+        var el=e.target,end=parseFloat(el.dataset.c),
+            suf=el.dataset.s||'',pre=el.dataset.p||'',
+            fps=60,dur=1100,steps=dur/(1000/fps),
+            inc=end/steps,cur=0;
+        var t=setInterval(function(){
+          cur=Math.min(cur+inc,end);
+          el.textContent=pre+Math.round(cur)+suf;
+          if(cur>=end)clearInterval(t);
+        },1000/fps);
+        io.unobserve(el);
+      }
+    });
+  },{threshold:0.5});
+  document.querySelectorAll('[data-c]').forEach(function(el){io.observe(el);});
+})();
+
+/* ── CARD TILT (desktop only) ── */
+(function(){
+  if(!window.matchMedia('(hover:hover)').matches)return;
+  document.querySelectorAll('.step,.prob-card,.trust-card').forEach(function(card){
+    card.addEventListener('mousemove',function(e){
+      var r=card.getBoundingClientRect();
+      var x=(e.clientX-r.left)/r.width-0.5;
+      var y=(e.clientY-r.top)/r.height-0.5;
+      card.style.transform='perspective(700px) rotateX('+(-y*5)+'deg) rotateY('+(x*5)+'deg) scale(1.02)';
+      card.style.transition='transform .05s ease';
+    });
+    card.addEventListener('mouseleave',function(){
+      card.style.transform='';
+      card.style.transition='transform .35s ease';
+    });
+  });
+})();
+
+/* ── RIPPLE ── */
+(function(){
+  document.querySelectorAll('.rip').forEach(function(btn){
+    btn.addEventListener('click',function(e){
+      var r=this.getBoundingClientRect();
+      var dot=document.createElement('span');
+      dot.className='rip-dot';
+      dot.style.left=(e.clientX-r.left)+'px';
+      dot.style.top=(e.clientY-r.top)+'px';
+      this.appendChild(dot);
+      dot.addEventListener('animationend',function(){dot.remove();});
+    });
+  });
+})();
+
+/* ── FAQ ── */
+function faq(btn){
+  var ans=btn.nextElementSibling,isOpen=ans.classList.contains('open');
+  document.querySelectorAll('.faq-ans').forEach(function(a){a.classList.remove('open');});
+  document.querySelectorAll('.faq-btn').forEach(function(b){b.classList.remove('open');});
+  if(!isOpen){ans.classList.add('open');btn.classList.add('open');}
+}
+</script>
+</body>
+</html>
